@@ -138,9 +138,10 @@ class TimeToTextConverter {
 
     switch(language){
       case "de":
-        return "" + deMap[hour] + " Uhr " + deMap[minutes] + " Minuten und " + deMap[seconds] + " Sekunden" ;
+        return "Es ist " + deMap[hour] + " Uhr " + deMap[minutes] + " Minuten und " + deMap[seconds] + " Sekunden" ;
       case "pl":
-        return "" + plMap[hour] + " godzin " + plMap[minutes] + " minuty " + plMap[seconds] + " sekund";
+
+        return "Jest" + plMap[hour] + " godzina i" + plMap[minutes] + " minut i " + plMap[seconds] + " sekund";
       default:
         return "unsupported language";
     }
