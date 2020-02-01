@@ -2,6 +2,7 @@ import 'package:aphasia/TimeBloc.dart';
 import 'package:aphasia/clock.dart';
 import 'package:aphasia/play_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 import 'TimeToTextConverter.dart';
@@ -74,6 +75,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                   ),
                 )
+
+              ],
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('icons/flags/png/de.png', package: 'country_icons'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('icons/flags/png/pl.png', package: 'country_icons'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('icons/flags/png/us.png', package: 'country_icons'),
+                ),
               ],
             ),
             new GestureDetector(child: PlayButton(), onTap: speakOut),
