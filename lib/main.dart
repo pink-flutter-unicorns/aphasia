@@ -194,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void speakOut() async {
     String text = TimeToTextConverter.convertStringToString(
         hours, minutes, seconds, lang);
-    await flutterTts.setLanguage("de");
+    await flutterTts.setLanguage(lang);
     await flutterTts.setVolume(1.0);
     await flutterTts.speak(text);
   }
