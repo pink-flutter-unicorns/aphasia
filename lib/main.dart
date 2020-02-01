@@ -45,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setTimeToNow();
   }
 
+  String textToBeSpoken = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,22 +68,85 @@ class _MyHomePageState extends State<MyHomePage> {
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('icons/flags/png/de.png',
-                      package: 'country_icons'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('icons/flags/png/pl.png',
-                      package: 'country_icons'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('icons/flags/png/us.png',
-                      package: 'country_icons'),
-                ),
+                GestureDetector(
+                    child: this.lang != "de"
+                        ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset('icons/flags/png/de.png',
+                                package: 'country_icons'),
+                          )
+                        : Container(
+                            color: Colors.blue,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset('icons/flags/png/de.png',
+                                  package: 'country_icons'),
+                            )),
+                    onTap: () {
+                      setState(() {
+                        this.lang = "de";
+                      });
+                      setText();
+                    }),
+                GestureDetector(
+                    child: this.lang != "pl"
+                        ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset('icons/flags/png/pl.png',
+                                package: 'country_icons'),
+                          )
+                        : Container(
+                            color: Colors.blue,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset('icons/flags/png/pl.png',
+                                  package: 'country_icons'),
+                            )),
+                    onTap: () {
+                      setState(() {
+                        this.lang = "pl";
+                      });
+                      setText();
+                    }),
+                GestureDetector(
+                    child: this.lang != "en"
+                        ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset('icons/flags/png/us.png',
+                                package: 'country_icons'),
+                          )
+                        : Container(
+                            color: Colors.blue,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset('icons/flags/png/us.png',
+                                  package: 'country_icons'),
+                            )),
+                    onTap: () {
+                      setState(() {
+                        this.lang = "en";
+                      });
+                      setText();
+                    }),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: this.textToBeSpoken.isNotEmpty
+                  ? Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Text(
+                          textToBeSpoken,
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  : null,
             ),
             new GestureDetector(child: PlayButton(), onTap: speakOut),
           ],
@@ -90,16 +155,26 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void setText() {
+    setState(() {
+      this.textToBeSpoken = TimeToTextConverter.convertStringToString(
+          hours, minutes, seconds, lang);
+    });
+  }
+
   void changeHours(num newHours) {
     setState(() => hours = newHours);
+    setText();
   }
 
   void changeMinutes(num newMinutes) {
     setState(() => minutes = newMinutes);
+    setText();
   }
 
   void changeSeconds(num newSeconds) {
     setState(() => seconds = newSeconds);
+    setText();
   }
 
   void setTimeToNow() {
