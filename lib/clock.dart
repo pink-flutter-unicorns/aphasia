@@ -1,30 +1,25 @@
+import 'package:aphasia/TimeBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class Clock extends StatefulWidget {
-  final int hours;
-  final int minutes;
-  final int seconds;
+  final TimeBloc timeBloc;
 
-  Clock({int hours, int minutes, int seconds})
-      : this.hours = hours,
-        this.minutes = minutes,
-        this.seconds = seconds;
+  Clock(this.timeBloc);
 
   @override
-  _ClockState createState() => _ClockState(hours, minutes, seconds);
+  _ClockState createState() => _ClockState(timeBloc);
 }
 
 class _ClockState extends State<Clock> {
-  int hours;
-  int minutes;
-  int seconds;
+  TimeBloc timeBloc;
 
-  _ClockState(int hours, int minutes, int seconds)
-      : this.hours = hours,
-        this.minutes = minutes,
-        this.seconds = seconds;
+  int hours = 0;
+  int minutes = 0;
+  int seconds = 0;
+
+  _ClockState(this.timeBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +33,9 @@ class _ClockState extends State<Clock> {
             minValue: 0,
             maxValue: 23,
             initialValue: hours,
-            onChanged: (newHours) => setState(() => hours = newHours),
+            onChanged: (newHours) => {
+                  setState(() => {this.hours = newHours, this.setValue()})
+                },
             infiniteLoop: true,
           ),
           Text(
@@ -48,8 +45,10 @@ class _ClockState extends State<Clock> {
           new NumberPicker.integer(
             minValue: 0,
             maxValue: 59,
-            initialValue: minutes,
-            onChanged: (newMinutes) => setState(() => minutes = newMinutes),
+            initialValue: 0,
+            onChanged: (newMinutes) => {
+              setState(() => {this.minutes = newMinutes, this.setValue()})
+            },
             infiniteLoop: true,
           ),
           Text(
@@ -59,12 +58,21 @@ class _ClockState extends State<Clock> {
           new NumberPicker.integer(
             minValue: 0,
             maxValue: 59,
-            initialValue: seconds,
-            onChanged: (newSeconds) => setState(() => seconds = newSeconds),
+            initialValue: 0,
+            onChanged: (newSeconds) => {
+              setState(() => {this.seconds = newSeconds, this.setValue()})
+            },
             infiniteLoop: true,
           ),
         ],
       ),
     );
+  }
+
+  void setValue() {
+    this
+        .timeBloc
+        .timeSink
+        .add(new TimeContainer(this.hours, this.minutes, this.seconds));
   }
 }

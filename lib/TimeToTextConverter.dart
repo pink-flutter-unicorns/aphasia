@@ -194,7 +194,7 @@ class TimeToTextConverter {
   
   var mapLocales = { "de": deMap,  "pl" : new Map() };
 
-  convertStringToString(int hour, int minutes, int seconds, String language) {
+  static convertStringToString(int hour, int minutes, int seconds, String language) {
 
     switch(language){
       case "de":
