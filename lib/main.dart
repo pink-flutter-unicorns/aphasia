@@ -1,5 +1,5 @@
+import 'package:aphasia/clock.dart';
 import 'package:aphasia/play_button.dart';
-import 'package:aphasia/time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new Clock(hours: 12, minutes: 14, seconds: 10),
             new GestureDetector(
               child: PlayButton(),
               onTap: speakOut
