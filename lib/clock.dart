@@ -61,22 +61,6 @@ class Clock extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              hoursPicker,
-              Text(
-                ":",
-                style: theme.textTheme.headline.copyWith(color: theme.accentColor),
-              ),
-              minutesPicker,
-              Text(
-                ":",
-                style: theme.textTheme.headline.copyWith(color: theme.accentColor),
-              ),
-              secondsPicker,
-            ],
-          ),
-           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FlatButton.icon(
@@ -95,6 +79,22 @@ class Clock extends StatelessWidget {
                   },
                 ),
               )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              hoursPicker,
+              Text(
+                ":",
+                style: theme.textTheme.headline.copyWith(color: theme.accentColor),
+              ),
+              minutesPicker,
+              Text(
+                ":",
+                style: theme.textTheme.headline.copyWith(color: theme.accentColor),
+              ),
+              secondsPicker,
             ],
           ),
         ],
