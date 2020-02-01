@@ -2,11 +2,11 @@ import 'dart:async';
 
 
 class TimeContainer {
-  int hour;
-  int minute;
+  int hours;
+  int minutes;
   int seconds;
 
-  TimeContainer(this.hour, this.minute, this.seconds);
+  TimeContainer(this.hours, this.minutes, this.seconds);
 
 
 }

@@ -19,7 +19,15 @@ class _ClockState extends State<Clock> {
   int minutes = 0;
   int seconds = 0;
 
-  _ClockState(this.timeBloc);
+  _ClockState(this.timeBloc) {
+    timeBloc.timeStream.listen((time) {
+      setState(() {
+        hours = time.hours;
+        minutes = time.minutes;
+        seconds = time.seconds;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +42,10 @@ class _ClockState extends State<Clock> {
             maxValue: 23,
             initialValue: hours,
             onChanged: (newHours) => {
-                  setState(() => {this.hours = newHours, this.setValue()})
-                },
-            infiniteLoop: true,
-          ),
-          Text(
-            ":",
-            style: theme.textTheme.headline.copyWith(color: theme.accentColor),
-          ),
-          new NumberPicker.integer(
-            minValue: 0,
-            maxValue: 59,
-            initialValue: 0,
-            onChanged: (newMinutes) => {
-              setState(() => {this.minutes = newMinutes, this.setValue()})
+              setState(() {
+                this.hours = newHours;
+                this.setValue();
+              })
             },
             infiniteLoop: true,
           ),
@@ -58,9 +56,28 @@ class _ClockState extends State<Clock> {
           new NumberPicker.integer(
             minValue: 0,
             maxValue: 59,
-            initialValue: 0,
+            initialValue: minutes,
+            onChanged: (newMinutes) => {
+              setState(() {
+                this.minutes = newMinutes;
+                this.setValue();
+              })
+            },
+            infiniteLoop: true,
+          ),
+          Text(
+            ":",
+            style: theme.textTheme.headline.copyWith(color: theme.accentColor),
+          ),
+          new NumberPicker.integer(
+            minValue: 0,
+            maxValue: 59,
+            initialValue: seconds,
             onChanged: (newSeconds) => {
-              setState(() => {this.seconds = newSeconds, this.setValue()})
+              setState(() {
+                this.seconds = newSeconds;
+                this.setValue();
+              })
             },
             infiniteLoop: true,
           ),

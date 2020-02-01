@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     timeBloc.timeStream.first
-        .then((onValue) => setState(() => {this.currentTime = onValue}));
+        .then((onValue) => setState(() => this.currentTime = onValue));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -69,13 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: Text('Now',
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                     onPressed: () {
-                      print(DateTime.now());
-                      //Code to execute when Floating Action Button is clicked
-                      //...
+                      var time = DateTime.now();
+                      timeBloc.timeSink.add(new TimeContainer(
+                          time.hour, time.minute, time.second));
                     },
                   ),
                 )
-
               ],
             ),
             new Row(
@@ -83,15 +82,18 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('icons/flags/png/de.png', package: 'country_icons'),
+                  child: Image.asset('icons/flags/png/de.png',
+                      package: 'country_icons'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('icons/flags/png/pl.png', package: 'country_icons'),
+                  child: Image.asset('icons/flags/png/pl.png',
+                      package: 'country_icons'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('icons/flags/png/us.png', package: 'country_icons'),
+                  child: Image.asset('icons/flags/png/us.png',
+                      package: 'country_icons'),
                 ),
               ],
             ),
@@ -103,13 +105,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void speakOut() async {
-
     this.speakIt(this.currentTime);
   }
 
   void speakIt(TimeContainer container) async {
     String text = TimeToTextConverter.convertStringToString(
-        container.hour, container.minute, container.seconds, lang);
+        container.hours, container.minutes, container.seconds, lang);
     await flutterTts.setLanguage("de");
     await flutterTts.setVolume(1.0);
     await flutterTts.speak(text);
