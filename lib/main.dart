@@ -1,4 +1,5 @@
 import 'package:aphasia/clock.dart';
+import 'package:aphasia/icon_only_button.dart';
 import 'package:aphasia/play_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int minutes = 0;
   int seconds = 0;
   String lang = "de";
+  String textToBeSpoken = "";
 
   @override
   void initState() {
@@ -45,8 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setTimeToNow();
     setText();
   }
-
-  String textToBeSpoken = "";
 
   @override
   Widget build(BuildContext context) {
@@ -69,64 +69,28 @@ class _MyHomePageState extends State<MyHomePage> {
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                GestureDetector(
-                    child: this.lang != "de"
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('icons/flags/png/de.png',
-                                package: 'country_icons'),
-                          )
-                        : Container(
-                            color: Colors.blue,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('icons/flags/png/de.png',
-                                  package: 'country_icons'),
-                            )),
+                IconOnlyButton(
+                    image: Image.asset('icons/flags/png/de.png',
+                        package: 'country_icons'),
+                    pressed: lang == "de",
                     onTap: () {
-                      setState(() {
-                        this.lang = "de";
-                      });
+                      setState(() => lang = "de");
                       setText();
                     }),
-                GestureDetector(
-                    child: this.lang != "pl"
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('icons/flags/png/pl.png',
-                                package: 'country_icons'),
-                          )
-                        : Container(
-                            color: Colors.blue,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('icons/flags/png/pl.png',
-                                  package: 'country_icons'),
-                            )),
+                IconOnlyButton(
+                    image: Image.asset('icons/flags/png/pl.png',
+                        package: 'country_icons'),
+                    pressed: lang == "pl",
                     onTap: () {
-                      setState(() {
-                        this.lang = "pl";
-                      });
+                      setState(() => lang = "pl");
                       setText();
                     }),
-                GestureDetector(
-                    child: this.lang != "en"
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('icons/flags/png/us.png',
-                                package: 'country_icons'),
-                          )
-                        : Container(
-                            color: Colors.blue,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset('icons/flags/png/us.png',
-                                  package: 'country_icons'),
-                            )),
+                IconOnlyButton(
+                    image: Image.asset('icons/flags/png/us.png',
+                        package: 'country_icons'),
+                    pressed: lang == "en",
                     onTap: () {
-                      setState(() {
-                        this.lang = "en";
-                      });
+                      setState(() => lang = "en");
                       setText();
                     }),
               ],
@@ -144,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: new Text(
+                        child: Text(
                           textToBeSpoken,
                           style: TextStyle(fontSize: 20, color: Colors.black),
                           textAlign: TextAlign.center,
