@@ -45,10 +45,29 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Clock(hours: 12, minutes: 14, seconds: 10),
-            new GestureDetector(
-              child: PlayButton(),
-              onTap: speakOut
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FlatButton.icon(
+                    color: Colors.blue,
+                    icon: Icon(
+                      Icons.access_time,
+                      color: Colors.white,
+                    ),
+                    label: Text('Now',
+                        style: TextStyle(fontSize: 20, color: Colors.white)),
+                    onPressed: () {
+                      print(DateTime.now());
+                      //Code to execute when Floating Action Button is clicked
+                      //...
+                    },
+                  ),
+                )
+              ],
             ),
+            new GestureDetector(child: PlayButton(), onTap: speakOut),
           ],
         ),
       ),
