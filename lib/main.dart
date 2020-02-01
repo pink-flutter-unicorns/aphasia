@@ -64,26 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
               onSecondsChanged: changeSeconds,
             ),
             new Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FlatButton.icon(
-                    color: Colors.blue,
-                    icon: Icon(
-                      Icons.access_time,
-                      color: Colors.white,
-                    ),
-                    label: Text('Now',
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                    onPressed: () {
-                      setState(() => setTimeToNow());
-                    },
-                  ),
-                )
-              ],
-            ),
-            new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(

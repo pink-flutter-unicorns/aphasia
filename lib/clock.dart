@@ -56,20 +56,47 @@ class Clock extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: <Widget>[
-          hoursPicker,
-          Text(
-            ":",
-            style: theme.textTheme.headline.copyWith(color: theme.accentColor),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              hoursPicker,
+              Text(
+                ":",
+                style: theme.textTheme.headline.copyWith(color: theme.accentColor),
+              ),
+              minutesPicker,
+              Text(
+                ":",
+                style: theme.textTheme.headline.copyWith(color: theme.accentColor),
+              ),
+              secondsPicker,
+            ],
           ),
-          minutesPicker,
-          Text(
-            ":",
-            style: theme.textTheme.headline.copyWith(color: theme.accentColor),
+           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FlatButton.icon(
+                  color: Colors.blue,
+                  icon: Icon(
+                    Icons.access_time,
+                    color: Colors.white,
+                  ),
+                  label: Text('Now',
+                      style: TextStyle(fontSize: 20, color: Colors.white)),
+                  onPressed: () {
+                    var time = DateTime.now();
+                    onHoursChanged(time.hour);
+                    onMinutesChanged(time.minute);
+                    onSecondsChanged(time.second);
+                  },
+                ),
+              )
+            ],
           ),
-          secondsPicker,
         ],
       ),
     );
