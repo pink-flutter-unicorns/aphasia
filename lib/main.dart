@@ -131,10 +131,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     }),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: this.textToBeSpoken.isNotEmpty
-                  ? Container(
+            Container(
+              height: 120,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
                       decoration: BoxDecoration(
                           color: Colors.black12,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -146,8 +150,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                    )
-                  : null,
+                    ),
+                  )
+                ],
+              ),
             ),
             new GestureDetector(child: PlayButton(), onTap: speakOut),
           ],
