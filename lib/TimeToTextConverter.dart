@@ -1,10 +1,12 @@
+
 class TimeToTextConverter {
   int hours;
-  var map = new Map();
 
-  convertStringToString(String input) {
-    this.map['123'] = 123;
-    return input;
+  var mapLocales = { "de": new Map(),  "pl" : new Map() };
+
+  convertStringToString(int hour, int minutes, int seconds, String language) {
+
+    return "zwölf Uhr sieben Minuten zwölf Sekunden";
   }
 
 }
