@@ -1,4 +1,3 @@
-import 'package:aphasia/TimeBloc.dart';
 import 'package:aphasia/clock.dart';
 import 'package:aphasia/play_button.dart';
 import 'package:flutter/material.dart';
@@ -39,13 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
   int minutes = 0;
   int seconds = 0;
   String lang = "de";
-  final TimeBloc timeBloc = TimeBloc();
-  TimeContainer currentTime;
+
+  @override
+  void initState() {
+    super.initState();
+    setTimeToNow();
+  }
 
   @override
   Widget build(BuildContext context) {
-    timeBloc.timeStream.first
-        .then((onValue) => setState(() => this.currentTime = onValue));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -54,7 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Clock(timeBloc),
+            new Clock(
+              hours: hours,
+              minutes: minutes,
+              seconds: seconds,
+              onHoursChanged: changeHours,
+              onMinutesChanged: changeMinutes,
+              onSecondsChanged: changeSeconds,
+            ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -69,9 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: Text('Now',
                         style: TextStyle(fontSize: 20, color: Colors.white)),
                     onPressed: () {
-                      var time = DateTime.now();
-                      timeBloc.timeSink.add(new TimeContainer(
-                          time.hour, time.minute, time.second));
+                      setState(() => setTimeToNow());
                     },
                   ),
                 )
@@ -104,13 +110,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void speakOut() async {
-    this.speakIt(this.currentTime);
+  void changeHours(num newHours) {
+    setState(() => hours = newHours);
   }
 
-  void speakIt(TimeContainer container) async {
+  void changeMinutes(num newMinutes) {
+    setState(() => minutes = newMinutes);
+  }
+
+  void changeSeconds(num newSeconds) {
+    setState(() => seconds = newSeconds);
+  }
+
+  void setTimeToNow() {
+    var time = DateTime.now();
+    hours = time.hour;
+    minutes = time.minute;
+    seconds = time.second;
+  }
+
+  void speakOut() async {
     String text = TimeToTextConverter.convertStringToString(
-        container.hours, container.minutes, container.seconds, lang);
+        hours, minutes, seconds, lang);
     await flutterTts.setLanguage("de");
     await flutterTts.setVolume(1.0);
     await flutterTts.speak(text);

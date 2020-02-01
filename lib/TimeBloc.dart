@@ -11,7 +11,6 @@ class TimeContainer {
 
 }
 class TimeBloc {
-
   StreamController streamController = StreamController<TimeContainer>.broadcast();
 
   Sink get timeSink=> streamController.sink;

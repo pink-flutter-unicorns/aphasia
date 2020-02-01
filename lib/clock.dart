@@ -1,95 +1,77 @@
-import 'package:aphasia/TimeBloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-class Clock extends StatefulWidget {
-  final TimeBloc timeBloc;
+class Clock extends StatelessWidget {
+  final int hours;
+  final int minutes;
+  final int seconds;
+  final ValueChanged<num> onHoursChanged;
+  final ValueChanged<num> onMinutesChanged;
+  final ValueChanged<num> onSecondsChanged;
 
-  Clock(this.timeBloc);
-
-  @override
-  _ClockState createState() => _ClockState(timeBloc);
-}
-
-class _ClockState extends State<Clock> {
-  TimeBloc timeBloc;
-
-  int hours = 0;
-  int minutes = 0;
-  int seconds = 0;
-
-  _ClockState(this.timeBloc) {
-    timeBloc.timeStream.listen((time) {
-      setState(() {
-        hours = time.hours;
-        minutes = time.minutes;
-        seconds = time.seconds;
-      });
-    });
-  }
+  Clock(
+      {this.hours,
+      this.minutes,
+      this.seconds,
+      this.onHoursChanged,
+      this.onMinutesChanged,
+      this.onSecondsChanged});
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var hoursPicker = NumberPicker.integer(
+      minValue: 0,
+      maxValue: 23,
+      initialValue: hours,
+      onChanged: onHoursChanged,
+      infiniteLoop: true,
+    );
+    var minutesPicker = NumberPicker.integer(
+      minValue: 0,
+      maxValue: 59,
+      initialValue: minutes,
+      onChanged: onMinutesChanged,
+      infiniteLoop: true,
+    );
+    var secondsPicker = NumberPicker.integer(
+      minValue: 0,
+      maxValue: 59,
+      initialValue: seconds,
+      onChanged: onSecondsChanged,
+      infiniteLoop: true,
+    );
+
+    Future.delayed(Duration(milliseconds: 100), () {
+      try {
+        hoursPicker.animateInt(hours);
+        minutesPicker.animateInt(minutes);
+        secondsPicker.animateInt(seconds);
+      } catch (e) {
+        print(
+            "Silently catching exception from picker ${e.toString()}"); // ScrollController not attached to any scroll views
+      }
+    });
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new NumberPicker.integer(
-            minValue: 0,
-            maxValue: 23,
-            initialValue: hours,
-            onChanged: (newHours) => {
-              setState(() {
-                this.hours = newHours;
-                this.setValue();
-              })
-            },
-            infiniteLoop: true,
-          ),
+          hoursPicker,
           Text(
             ":",
             style: theme.textTheme.headline.copyWith(color: theme.accentColor),
           ),
-          new NumberPicker.integer(
-            minValue: 0,
-            maxValue: 59,
-            initialValue: minutes,
-            onChanged: (newMinutes) => {
-              setState(() {
-                this.minutes = newMinutes;
-                this.setValue();
-              })
-            },
-            infiniteLoop: true,
-          ),
+          minutesPicker,
           Text(
             ":",
             style: theme.textTheme.headline.copyWith(color: theme.accentColor),
           ),
-          new NumberPicker.integer(
-            minValue: 0,
-            maxValue: 59,
-            initialValue: seconds,
-            onChanged: (newSeconds) => {
-              setState(() {
-                this.seconds = newSeconds;
-                this.setValue();
-              })
-            },
-            infiniteLoop: true,
-          ),
+          secondsPicker,
         ],
       ),
     );
-  }
-
-  void setValue() {
-    this
-        .timeBloc
-        .timeSink
-        .add(new TimeContainer(this.hours, this.minutes, this.seconds));
   }
 }
