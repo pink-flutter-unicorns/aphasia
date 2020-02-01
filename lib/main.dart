@@ -10,11 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Aphasia',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Aphasia'),
     );
   }
 }
@@ -29,14 +29,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   FlutterTts flutterTts = FlutterTts();
-
-  void speakOut() async {
-    await flutterTts.setLanguage("de");
-    await flutterTts.setVolume(1.0);
-    await flutterTts.speak("Zwölf Uhr Mittags");
-  }
+  int hours = 0;
+  int minutes = 0;
+  int seconds = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -48,26 +44,20 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TimePicker(),
             new GestureDetector(
               child: PlayButton(),
               onTap: speakOut
             ),
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: speakOut,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void speakOut() async {
+    //TODO: implement mapping
+    await flutterTts.setLanguage("de");
+    await flutterTts.setVolume(1.0);
+    await flutterTts.speak("Zwölf Uhr Mittags");
   }
 }
