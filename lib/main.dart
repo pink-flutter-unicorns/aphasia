@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     setTimeToNow();
+    setText();
   }
 
   String textToBeSpoken = "";
