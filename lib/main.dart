@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Clock2Speech',
+      title: 'Time2Speech',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Clock2Speech'),
+      home: MyHomePage(title: 'Time2Speech'),
     );
   }
 }
